@@ -1,0 +1,27 @@
+{
+	"name": "com.hzc-electric",
+	"version": "1.0.0",
+	"description": "This app allows you to connect your HZC electric Z-Wave or Zigbee Devices directly to Homey",
+	"main": "app.js",
+	"dependencies": {
+		"git-branch": "^1.0.0",
+		"homey-api": "^1.7.0",
+		"homey-meshdriver": "^1.3.24",
+		"homey-zigbeedriver": "^1.6.2",
+		"homey-zwavedriver": "^1.0.4",
+		"zigbee-clusters": "^1.4.0",
+		"moment-timezone": "^0.5.34",
+    	"silly-datetime": "^0.1.2"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"eslint-config-athom": "^2.0.8"
+	},
+	"scripts": {
+		"run": "homeyConfig compose && athom project --run",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"engines": {
+		"node": ">=8.0.0"
+	}
+}

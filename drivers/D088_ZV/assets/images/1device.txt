@@ -1,0 +1,125 @@
+'use strict' 
+
+const { ZwaveDevice } = require('homey-zwavedriver'); 
+
+class d682_zv_Device extends ZwaveDevice {
+  
+  cur_meter_power = 0
+
+  async onNodeInit({ node }) { 
+      
+    this.enableDebug()
+    this.printNode()
+
+    if (this.hasCapability('measure_power')) {
+      await this.removeCapability('measure_power')
+    }
+    
+    if (!this.hasCapability('meter_power')){
+      await this.addCapability('meter_power')
+    }
+
+    this.registerCapability('onoff', 'SWITCH_MULTILEVEL')
+    this.registerCapability('dim', 'SWITCH_MULTILEVEL')
+    //this.registerCapability('measure_power', 'METER')
+    //this.registerCapability('measure_power', 'MANUFACTURER_SPECIFIC')
+    //this.registerCapability('meter_power', 'SWITCH_MULTILEVEL') 
+
+
+    this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT',  (payload) => { 
+        console.log('+++++++++++ CONFIGURATION_REPORT = ', payload)
+    }) 
+    
+    this.registerReportListener('BASIC', 'BASIC_REPORT', report => {
+      console.log('&&&&&&&& BASIC_REPORT = ', report)
+      if (report && report.hasOwnProperty('Current Value')) { 
+        if (this.hasCapability('onoff')) {
+          this.setCapabilityValue('onoff', report['Current Value'] > 0)
+        }
+
+        if (this.hasCapability('dim')) {
+          this.setCapabilityValue('dim', report['Current Value'] / 99)
+        }
+          
+      }
+    }) 
+    
+    this.registerReportListener( 'METER', 'METER_REPORT', payload => {
+        console.log('--METER-METER_REPORT', payload)
+        const Properties1 = payload['Properties1'] || {};
+        const size = Properties1['Size'] || 4;
+        const precision = Properties1['Precision'] || 2;
+
+        const meterValue2 = payload['Meter Value'];
+ 
+        if (Buffer.isBuffer(meterValue2)) {
+          payload['Meter Value (Parsed)'] = meterValue2.readIntBE(0, size);
+          payload['Meter Value (Parsed)'] /= 10 ** precision;
+        }
+
+        if (Properties1['Scale'] === 0) {
+            this.cur_meter_power = payload['Meter Value (Parsed)'] || 0;
+        } else { 
+            this.cur_meter_power = payload['Meter Value (Parsed)'] || 0;
+        }
+      }
+    ) 
+
+ 
+    setInterval(() => {
+      this.calcu_kwh();
+      //this.tester()
+    }, 10000); 
+
+
+    this.node.CommandClass['COMMAND_CLASS_METER'].on('report', (command, payload) => { 
+      console.log('------Meter report: ', command,  payload)
+    })
+
+    this.node.CommandClass['COMMAND_CLASS_BASIC'].on('report', (command, payload) => {
+      console.log('------BASIC report: ', command, payload)
+    })
+
+    this.node.CommandClass['COMMAND_CLASS_SWITCH_MULTILEVEL'].on('report', (command, payload) => {
+      console.log('------SWITCH_MULTILEVEL report: ', command, payload)
+    })
+    
+  }
+
+  async calcu_kwh() {    
+    let kwh = this.getStoreValue('total_kwh') || 0;   
+    let cur_meter = (this.getCapabilityValue('dim') * 100.000) || 0.00;    
+    let kwh10s =  cur_meter / 1000 / 60 / 6;   
+    kwh = kwh + kwh10s;
+    this.setStoreValue('total_kwh', kwh); 
+    console.log('10s ', cur_meter, kwh10s, kwh, this.cur_meter_power ) 
+    this.setCapabilityValue('meter_power', kwh);  
+  }
+
+
+
+  async tester() {
+
+    let commandClassMeter = null;
+     
+    commandClassMeter = this.getCommandClass('METER'); 
+
+    console.log('=================================================')
+  
+    if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_GET')) {
+      let payload = { Properties1 : { Scale : 0} }
+      await commandClassMeter.METER_GET(payload);
+       
+      
+    }
+    else {
+      throw new Error('missing_meter_report_command');
+    }
+    
+    console.log('++++++++++++===============================+')
+ 
+  }
+
+} 
+
+module.exports = d682_zv_Device

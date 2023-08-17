@@ -10,7 +10,7 @@
   "category": [
     "lights"
   ],
-  "version": "4.1.254",
+  "version": "4.1.263",
   "compatibility": ">=5.0.0",
   "athomForumDiscussionId": 0,
   "homeyCommunityTopicId": 0,
@@ -309,6 +309,518 @@
       "settings": []
     },
     {
+      "id": "T7E_ZG",
+      "name": {
+        "en": "T7E-ZG"
+      },
+      "zigbee": {
+        "manufacturerName": [
+          "Shyugj",
+          "HZC",
+          "Namron AS"
+        ],
+        "productId": [
+          "T7E-ZG",
+          "T7E_ZG",
+          "4512758",
+          "4512759"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              10,
+              28,
+              30,
+              25,
+              513,
+              516,
+              2820,
+              1794,
+              32772
+            ],
+            "bindings": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              10,
+              28,
+              30,
+              1794,
+              2820,
+              32772,
+              513,
+              516
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "For inclusion, long press M for 5s when in \"Advance settings -> in-network mode\"."
+          }
+        }
+      },
+      "class": "thermostat",
+      "images": {
+        "small": "/assets/thermostat/small.png",
+        "large": "/assets/thermostat/large.png",
+        "xlarge": "/assets/thermostat/xlarge.png"
+      },
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "t7e_zg_window_state",
+        "child_lock",
+        "target_temperature",
+        "measure_temperature",
+        "t7e_zg_thermostat_mode",
+        "eco_mode",
+        "frost",
+        "t7e_zg_regulator_percentage"
+      ],
+      "energy": {
+        "approximation": {
+          "usageOn": 5,
+          "usageOff": 1
+        },
+        "cumulative": true
+      },
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 5,
+          "max": 40,
+          "step": 0.5
+        },
+        "button.calibrate": {
+          "maintenanceAction": false,
+          "title": {
+            "en": "Start calibration"
+          },
+          "desc": {
+            "en": "Start the sensor calibration process."
+          }
+        },
+        "button.reset_meter": {
+          "maintenanceAction": false,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), this can not be restored."
+          }
+        },
+        "measure_power": {
+          "approximated": true
+        }
+      },
+      "connectivity": [
+        "zigbee"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "settings": [
+        {
+          "id": "thermostat_regulator_mode",
+          "label": {
+            "en": "Thermostat/Regulator mode"
+          },
+          "hint": {
+            "en": "Made to take effect. We need to go back the main interface and click this APP `thermostat` icon to launch application again."
+          },
+          "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Thermostat Mode"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Regulator Heating"
+              }
+            }
+          ]
+        },
+        {
+          "id": "regulator",
+          "type": "dropdown",
+          "value": "30",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "OFF"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "1 min"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "2 min"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "3 min"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "4 min"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "5 min"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "6 min"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "7 min"
+              }
+            },
+            {
+              "id": "8",
+              "label": {
+                "en": "8 min"
+              }
+            },
+            {
+              "id": "9",
+              "label": {
+                "en": "9 min"
+              }
+            },
+            {
+              "id": "10",
+              "label": {
+                "en": "10 min"
+              }
+            },
+            {
+              "id": "11",
+              "label": {
+                "en": "11 min"
+              }
+            },
+            {
+              "id": "12",
+              "label": {
+                "en": "12 min"
+              }
+            },
+            {
+              "id": "13",
+              "label": {
+                "en": "13 min"
+              }
+            },
+            {
+              "id": "14",
+              "label": {
+                "en": "14 min"
+              }
+            },
+            {
+              "id": "15",
+              "label": {
+                "en": "15 min"
+              }
+            },
+            {
+              "id": "16",
+              "label": {
+                "en": "16 min"
+              }
+            },
+            {
+              "id": "17",
+              "label": {
+                "en": "17 min"
+              }
+            },
+            {
+              "id": "18",
+              "label": {
+                "en": "18 min"
+              }
+            },
+            {
+              "id": "19",
+              "label": {
+                "en": "19 min"
+              }
+            },
+            {
+              "id": "20",
+              "label": {
+                "en": "20 min"
+              }
+            },
+            {
+              "id": "21",
+              "label": {
+                "en": "21 min"
+              }
+            },
+            {
+              "id": "22",
+              "label": {
+                "en": "22 min"
+              }
+            },
+            {
+              "id": "23",
+              "label": {
+                "en": "23 min"
+              }
+            },
+            {
+              "id": "24",
+              "label": {
+                "en": "24 min"
+              }
+            },
+            {
+              "id": "25",
+              "label": {
+                "en": "25 min"
+              }
+            },
+            {
+              "id": "26",
+              "label": {
+                "en": "26 min"
+              }
+            },
+            {
+              "id": "27",
+              "label": {
+                "en": "27 min"
+              }
+            },
+            {
+              "id": "28",
+              "label": {
+                "en": "28 min"
+              }
+            },
+            {
+              "id": "29",
+              "label": {
+                "en": "29 min"
+              }
+            },
+            {
+              "id": "30",
+              "label": {
+                "en": "30 min"
+              }
+            }
+          ],
+          "units": {
+            "en": "min"
+          },
+          "label": {
+            "en": "Regulator heating minute"
+          },
+          "hint": {
+            "en": ""
+          }
+        },
+        {
+          "id": "sensor_mode",
+          "type": "dropdown",
+          "value": "f",
+          "label": {
+            "en": "Sensor mode "
+          },
+          "values": [
+            {
+              "id": "a",
+              "label": {
+                "en": "A "
+              }
+            },
+            {
+              "id": "f",
+              "label": {
+                "en": "F "
+              }
+            },
+            {
+              "id": "fp",
+              "label": {
+                "en": "FP "
+              }
+            },
+            {
+              "id": "af",
+              "label": {
+                "en": "AF "
+              }
+            },
+            {
+              "id": "a2",
+              "label": {
+                "en": "A2 "
+              }
+            },
+            {
+              "id": "a2f",
+              "label": {
+                "en": "A2F "
+              }
+            },
+            {
+              "id": "p",
+              "label": {
+                "en": "P "
+              }
+            }
+          ]
+        },
+        {
+          "id": "lcd_backlight_wait",
+          "label": {
+            "en": "LCD backlight standby"
+          },
+          "type": "dropdown",
+          "units": {
+            "en": "%"
+          },
+          "value": "10",
+          "values": [
+            {
+              "id": "10",
+              "label": {
+                "en": "10%"
+              }
+            },
+            {
+              "id": "20",
+              "label": {
+                "en": "20%"
+              }
+            },
+            {
+              "id": "30",
+              "label": {
+                "en": "30%"
+              }
+            },
+            {
+              "id": "40",
+              "label": {
+                "en": "40%"
+              }
+            },
+            {
+              "id": "50",
+              "label": {
+                "en": "50%"
+              }
+            },
+            {
+              "id": "60",
+              "label": {
+                "en": "60%"
+              }
+            },
+            {
+              "id": "70",
+              "label": {
+                "en": "70%"
+              }
+            },
+            {
+              "id": "80",
+              "label": {
+                "en": "80%"
+              }
+            },
+            {
+              "id": "90",
+              "label": {
+                "en": "90%"
+              }
+            },
+            {
+              "id": "100",
+              "label": {
+                "en": "100%"
+              }
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Window"
+          },
+          "children": [
+            {
+              "id": "window_check",
+              "label": {
+                "en": "Window check"
+              },
+              "type": "checkbox",
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "App version"
+          },
+          "children": [
+            {
+              "id": "app_version",
+              "type": "label",
+              "label": {
+                "en": "App version"
+              },
+              "value": "v1.0.2307.2",
+              "hint": {
+                "en": "App version"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "d682_zv",
       "name": {
         "en": "D682-ZV"
@@ -434,11 +946,13 @@
           "RedBox",
           "Redbox",
           "Shyugj",
-          "HZC"
+          "HZC",
+          "Namron AS"
         ],
         "productId": [
           "Dimmer-Switch-ZB3.0",
-          "D076-ZG"
+          "D076-ZG",
+          "1402755"
         ],
         "endpoints": {
           "1": {
@@ -1138,7 +1652,7 @@
       ],
       "energy": {
         "batteries": [
-          "CR2450"
+          "AAA"
         ]
       },
       "zigbee": {
@@ -1188,6 +1702,17 @@
         "small": "/drivers/motion2/assets/images/small.png"
       },
       "settings": [
+        {
+          "id": "noficiation_count",
+          "type": "label",
+          "label": {
+            "en": "Alarm report"
+          },
+          "hint": {
+            "en": "Device alarm report count"
+          },
+          "value": "0"
+        },
         {
           "id": "alarm_motion_reset_window",
           "type": "number",
@@ -1256,11 +1781,14 @@
           "RedBox",
           "Redbox",
           "Shyugj",
-          "HZC"
+          "HZC",
+          "Namron AS"
         ],
         "productId": [
           "MeterSmartPlug",
-          "S726-ZB3.0"
+          "S726-ZB3.0",
+          "4512766",
+          "4512767"
         ],
         "endpoints": {
           "1": {
@@ -1379,7 +1907,10 @@
             {
               "id": "water_alarm_relay_action",
               "label": {
-                "en": "When water invades this device, turn off the relay immediately."
+                "en": "Relay"
+              },
+              "hint": {
+                "en": "Turn off relay, when water alarm."
               },
               "type": "dropdown",
               "value": "noAction",
@@ -1393,15 +1924,23 @@
                 {
                   "id": "turnOffRelay",
                   "label": {
-                    "en": "Turn off relay "
+                    "en": "Turn OFF"
                   }
                 }
               ]
-            },
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "NTC Configuration"
+          },
+          "children": [
             {
               "id": "ntcOperationSelect",
               "label": {
-                "en": "Water alarm (operation options)"
+                "en": "NTC Auto Operation"
               },
               "type": "dropdown",
               "value": "unuse",
@@ -1431,9 +1970,6 @@
               "label": {
                 "en": "NTC1 Calibration(°c)"
               },
-              "hint": {
-                "en": "NTC1 calibration (-6°c - 6°c)"
-              },
               "type": "number",
               "value": 0,
               "min": -6,
@@ -1446,10 +1982,7 @@
             {
               "id": "NTCCalibration2",
               "label": {
-                "en": "NTC2 Calibration"
-              },
-              "hint": {
-                "en": "NTC2 calibration (-6°c - 6°c)"
+                "en": "NTC2 Calibration(°c)"
               },
               "type": "number",
               "value": 0,
@@ -1463,11 +1996,14 @@
             {
               "id": "nctMin",
               "label": {
-                "en": "set NCT min. (°c)"
+                "en": "Turn ON relay, NTC temp. (°c)"
+              },
+              "hint": {
+                "en": "When min. temperature is reached, relay turns on"
               },
               "type": "number",
               "value": 30,
-              "min": -50,
+              "min": 0,
               "max": 100,
               "step": 1,
               "units": {
@@ -1477,11 +2013,14 @@
             {
               "id": "nctMax",
               "label": {
-                "en": "set NCT max.(°c)"
+                "en": "Turn OFF relay, NTC temp. (°c)"
+              },
+              "hint": {
+                "en": "When max. temperature is reached, relay turns off"
               },
               "type": "number",
               "value": 70,
-              "min": -50,
+              "min": 0,
               "max": 100,
               "step": 1,
               "units": {
@@ -1596,7 +2135,7 @@
           "label": {
             "en": "App version"
           },
-          "value": "v1.0.230315.16",
+          "value": "1.0.30315.630",
           "hint": {
             "en": "App version"
           }
@@ -1672,11 +2211,10 @@
         }
       },
       "platforms": [
-        "local"
+        "local",
+        "cloud"
       ],
-      "connectivity": [
-        "lan"
-      ]
+      "connectivity": []
     },
     {
       "id": "smart_switch_zg",
@@ -2784,7 +3322,8 @@
         }
       },
       "platforms": [
-        "local"
+        "local",
+        "cloud"
       ],
       "connectivity": [
         "zwave"
@@ -3333,6 +3872,110 @@
             }
           }
         ]
+      },
+      {
+        "id": "smart_switch_turned_on_for_switch_1",
+        "title": {
+          "en": "Turned on for switch 1"
+        },
+        "hint": {
+          "en": "Turned on for switch 1."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "smart_switch_turned_off_for_switch_1",
+        "title": {
+          "en": "Turned off for switch 1"
+        },
+        "hint": {
+          "en": "Turned off for switch 1."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "smart_switch_turned_on_for_switch_2",
+        "title": {
+          "en": "Turned on for switch 2"
+        },
+        "hint": {
+          "en": "Turned on for switch 2."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "smart_switch_turned_off_for_switch_2",
+        "title": {
+          "en": "Turned off for switch 2"
+        },
+        "hint": {
+          "en": "Turned off for switch 2."
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "smart_switch_with_onoff",
+        "title": {
+          "en": "Smart Switch onoff"
+        },
+        "titleFormatted": {
+          "en": "Turned [[onoff]] for device [[endpoint]]"
+        },
+        "hint": {
+          "en": "Smart switch onoff."
+        },
+        "duration": false,
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          },
+          {
+            "name": "onoff",
+            "type": "number",
+            "min": 0,
+            "max": 1,
+            "step": 1,
+            "title": {
+              "en": "0 to set off, 1 to set on"
+            }
+          },
+          {
+            "name": "endpoint",
+            "type": "number",
+            "min": 1,
+            "max": 2,
+            "step": 1,
+            "title": {
+              "en": "Device number: 1 or 2"
+            }
+          }
+        ]
       }
     ]
   },
@@ -3582,13 +4225,13 @@
     "device_temperature_alarm": {
       "type": "string",
       "title": {
-        "en": "Device Temperature"
+        "en": "Device Temp. Alarm"
       },
       "desc": {
-        "en": "Device Temperature"
+        "en": "Device Temperature Alarm"
       },
       "getable": true,
-      "setable": false,
+      "setable": true,
       "uiComponent": "sensor",
       "icon": "/assets/temperature_icon.svg"
     },
@@ -3992,6 +4635,23 @@
       "setable": false,
       "uiComponent": "sensor",
       "icon": "/assets/tempmeasure/dumbbell-svgrepo-com.svg"
+    },
+    "hzc_tm_water_sensor_alarm": {
+      "type": "boolean",
+      "title": {
+        "en": "Water Alarm"
+      },
+      "desc": {
+        "en": "Water Alarm"
+      },
+      "units": {
+        "en": ""
+      },
+      "insights": true,
+      "getable": true,
+      "setable": true,
+      "uiComponent": "sensor",
+      "icon": "/assets/tempmeasure/water-drop-4-svgrepo-com.svg"
     },
     "hzc_tm_water_sensor_value": {
       "type": "string",

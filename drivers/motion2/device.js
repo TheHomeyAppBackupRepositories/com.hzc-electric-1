@@ -13,6 +13,8 @@ class MotionSensor extends ZigBeeDevice {
 	onNodeInit({ zclNode }) {
 		// Register measure_battery capability and configure attribute reporting
 
+		this.noficiation_count = 0
+
 		// Refactored measure_battery to alarm battery, not all devices will have this capability
 		if (this.hasCapability('alarm_battery')) {
 
@@ -46,8 +48,8 @@ class MotionSensor extends ZigBeeDevice {
 
 
 	/**
-   * Update alarm capabilities based on the IASZoneStatusChangeNotification.
-   */
+   	* Update alarm capabilities based on the IASZoneStatusChangeNotification.
+   	*/
 	onIASZoneStatusChangeNoficiation({
 		zoneStatus, extendedStatus, zoneId, delay,
 	}) {
@@ -55,6 +57,13 @@ class MotionSensor extends ZigBeeDevice {
 		this.setCapabilityValue('alarm_motion', zoneStatus.alarm1);
 		this.setCapabilityValue('alarm_tamper', zoneStatus.tamper); 
 		this.setCapabilityValue('alarm_battery', zoneStatus.battery); 
+
+		this.noficiation_count += 1
+
+		this.log("+++ noficiation_count : ", this.noficiation_count)
+
+		this.setSettings({noficiation_count : '' + this.noficiation_count})
+		//this.setSetting('noficiation_count', ''+ this.noficiation_count )
   
 		this.resetOnTimeout();
 	} 
@@ -73,7 +82,7 @@ class MotionSensor extends ZigBeeDevice {
 			this.setCapabilityValue('alarm_tamper', false).catch(this.error);
 			this.setCapabilityValue('alarm_battery', false).catch(this.error);
 		}, alarmMotionResetWindow * 1000);
-	} 
+	}  
 	
 }
 

@@ -35,7 +35,7 @@ const {
 } = require('./lib/devices/utils');
 
 
-class thermostat_t5_zg_thermostat extends ZigBeeDevice {
+class t7e_zg_thermostat extends ZigBeeDevice {
 
 
 
@@ -1043,4 +1043,4 @@ class thermostat_t5_zg_thermostat extends ZigBeeDevice {
 
 
 
-module.exports = thermostat_t5_zg_thermostat;
+module.exports = t7e_zg_thermostat;

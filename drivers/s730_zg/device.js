@@ -39,12 +39,8 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
 
     await this.addCapability('ac_alarm')
     await this.addCapability('device_temperature_alarm')
-    
-    
-
-    
-    //Temp measurement
-    
+     
+    //Temp measurement 
     await this.addCapability('hzc_tm_measured_value_1')
     await this.addCapability('hzc_tm_measured_value_2')
     //await this.addCapability('hzc_tm_resistance_value_1')
@@ -53,8 +49,14 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
     if (this.hasCapability('hzc_tm_resistance_value_1')) await this.removeCapability('hzc_tm_resistance_value_1')
     if (this.hasCapability('hzc_tm_resistance_value_2')) await this.removeCapability('hzc_tm_resistance_value_2')
 
-    await this.addCapability('hzc_tm_water_sensor_value') 
 
+    //await this.addCapability('hzc_tm_water_sensor_value') 
+    if (this.hasCapability('hzc_tm_water_sensor_value')) {
+      await this.removeCapability('hzc_tm_water_sensor_value')
+    }
+    if (!this.hasCapability('hzc_tm_water_sensor_alarm')){
+      await this.addCapability('hzc_tm_water_sensor_alarm')
+    } 
     
 
     //init settings
@@ -105,12 +107,12 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
           get: 'waterSensorValue',
           report: 'waterSensorValue',
           reportParser: value => { 
-            this.log(`waterSensorValue `, value) 
+            this.log(`waterSensorValue `, value)  
             const res = value.getBits()
             if (res.length > 0){
               return res[0] 
             } 
-            return ' - '
+            return 'Normal'
           },
           getOpts: {
             getOnStart: true, pollInterval: 60*60*1000, getOnOnline: true
@@ -126,6 +128,28 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
   
       }
 
+      //Water alarm
+      if (this.hasCapability('hzc_tm_water_sensor_alarm')){
+        this.registerCapability('hzc_tm_water_sensor_alarm', CLUSTER.TEMPERATURE_MEASUREMENT, {
+          get: 'waterSensorValue',
+          report: 'waterSensorValue',
+          reportParser: value => { 
+            this.log(`waterSensorValue `, value)  
+            return value
+          },
+          getOpts: {
+            getOnStart: true, pollInterval: 60*60*1000, getOnOnline: true
+          },
+          reportOpts: {
+            configureAttributeReporting: {
+              minInterval: 10,  
+              maxInterval: 60000,  
+              minChange: 0.5,
+            },
+          },
+        }) 
+      }
+
       if (this.hasCapability('hzc_tm_measured_value_1')){
 
         this.registerCapability('hzc_tm_measured_value_1', CLUSTER.TEMPERATURE_MEASUREMENT, {
@@ -133,7 +157,7 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
           report: 'measuredValue',
           reportParser: value => { 
             this.log(`measuredValue 1 = `, value) 
-            return value / 100
+            return value / 10
           },
           getOpts: {
             getOnStart: true, pollInterval: 60*60*1000, getOnOnline: true
@@ -148,7 +172,7 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
         }) 
 
       }
-
+      
       if (this.hasCapability('hzc_tm_measured_value_2')){
         
         this.registerCapability('hzc_tm_measured_value_2', CLUSTER.TEMPERATURE_MEASUREMENT, {
@@ -156,7 +180,10 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
           report: 'measuredValue2',
           reportParser: value => { 
             this.log(`measuredValue 2 = `, value) 
-            return value / 100
+            if (value === 32768 || value === -32768){
+              //return 0
+            }
+            return value / 10
           },
           getOpts: {
             getOnStart: true, pollInterval: 60*60*1000, getOnOnline: true
@@ -447,7 +474,7 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
           if (res.length > 0){
             return res[0] 
           } 
-          return 'Temperature Normal'
+          return '-'
         },
         getOpts: {
           getOnStart: true, pollInterval: 60*60*1000, getOnOnline: true
@@ -830,10 +857,26 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
 
     try {
       let resistanceValue = await this.temperatureMeasurementCluster().readAttributes(
-        "resistanceValue1", "resistanceValue2", 
+        "resistanceValue1", "resistanceValue2", "measuredValue", "measuredValue2",
         "waterAlarmRelayAction", "ntcOperationSelect", "nctMin", "nctMax", "NTCCalibration1", "NTCCalibration2")
       if (resistanceValue != undefined) {
         this.log('==========read temperatureMeasurementCluster =', resistanceValue)
+
+        if (resistanceValue.hasOwnProperty('measuredValue')){
+          if (this.hasCapability("hzc_tm_measured_value_1")){
+            let measuredValue = resistanceValue['measuredValue'] / 10
+            this.setCapabilityValue('hzc_tm_measured_value_1', measuredValue)
+          }
+        }
+
+        if (resistanceValue.hasOwnProperty('measuredValue2')){
+          if (this.hasCapability("hzc_tm_measured_value_2")){
+            let measuredValue = resistanceValue['measuredValue2'] / 10
+            this.setCapabilityValue('hzc_tm_measured_value_2', measuredValue)
+          }
+        }
+
+
         if (resistanceValue.hasOwnProperty('resistanceValue1')){
           this.setSettings({ resistance_value_1 : ''+resistanceValue['resistanceValue1'] })
         }
@@ -883,8 +926,53 @@ class s730_zg_Device extends HzcSwitch2GangZigBeeDevice {
     this.app_inited = true  
     this.log('-------app inited : ', this.params)
  
+    this.homey.setTimeout( async () => {
+      await this._timer_loop()
+    }, 5000)  
 
   } //end of init app
+
+
+  async _timer_loop() {
+    if (!this.app_inited) return;
+ 
+    try {
+      let resistanceValue = await this.temperatureMeasurementCluster().readAttributes(
+        "measuredValue", "measuredValue2", "waterSensorValue")
+      if (resistanceValue != undefined) {
+        this.log('==========read temperatureMeasurementCluster =', resistanceValue)
+
+        if (resistanceValue.hasOwnProperty('measuredValue')){
+          if (this.hasCapability("hzc_tm_measured_value_1")){
+            let measuredValue = resistanceValue['measuredValue'] / 10
+            this.setCapabilityValue('hzc_tm_measured_value_1', measuredValue)
+          }
+        }
+
+        if (resistanceValue.hasOwnProperty('measuredValue2')){
+          if (this.hasCapability("hzc_tm_measured_value_2")){
+            let measuredValue = resistanceValue['measuredValue2'] / 10
+            this.setCapabilityValue('hzc_tm_measured_value_2', measuredValue)
+          }
+        } 
+
+        if (resistanceValue.hasOwnProperty('waterSensorValue')){
+          if (this.hasCapability('hzc_tm_water_sensor_alarm')){
+            this.setCapabilityValue('hzc_tm_water_sensor_alarm', resistanceValue['waterSensorValue']) 
+          }
+        }
+         
+      }
+
+    } catch (error) {
+        this.log('-----read temperatureMeasurementCluster ', error) 
+    } 
+
+    this.homey.setTimeout( async () => {
+      await this._timer_loop()
+    }, 5 * 60 * 1000) 
+
+  }
 
 }
 

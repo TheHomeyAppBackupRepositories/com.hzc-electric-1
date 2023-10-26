@@ -10,7 +10,7 @@
   "category": [
     "lights"
   ],
-  "version": "4.1.263",
+  "version": "4.1.273",
   "compatibility": ">=5.0.0",
   "athomForumDiscussionId": 0,
   "homeyCommunityTopicId": 0,
@@ -2206,7 +2206,7 @@
         },
         "learnmode": {
           "instruction": {
-            "en": "to include, Press button1 or button 2 once and long press second time for over 3s to join the network."
+            "en": "To Include, quick press Config Button for two times."
           }
         }
       },
@@ -2383,6 +2383,244 @@
           "hint": {
             "en": "Device current mode"
           }
+        }
+      ]
+    },
+    {
+      "id": "t11_zg",
+      "name": {
+        "en": "T11_ZG Thermostat"
+      },
+      "zigbee": {
+        "manufacturerName": [
+          "Shyugj",
+          "HZC"
+        ],
+        "productId": [
+          "T11_ZG"
+        ],
+        "endpoints": {
+          "1": {
+            "clusters": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              10,
+              28,
+              30,
+              25,
+              513,
+              516,
+              2820,
+              1794,
+              32772,
+              32797
+            ],
+            "bindings": [
+              0,
+              2,
+              3,
+              4,
+              5,
+              6,
+              8,
+              10,
+              28,
+              30,
+              1794,
+              2820,
+              32772,
+              513,
+              516,
+              32797
+            ]
+          }
+        },
+        "learnmode": {
+          "instruction": {
+            "en": "The thermostat enters the distribution network state through lnclued in Zigbee Setup"
+          }
+        }
+      },
+      "class": "thermostat",
+      "images": {
+        "small": "/assets/thermostat/small.png",
+        "large": "/assets/thermostat/large.png",
+        "xlarge": "/assets/thermostat/xlarge.png"
+      },
+      "capabilities": [
+        "onoff",
+        "measure_power",
+        "meter_power",
+        "t7e_zg_window_state",
+        "child_lock",
+        "target_temperature",
+        "measure_temperature",
+        "t7e_zg_thermostat_mode",
+        "eco_mode",
+        "frost",
+        "t7e_zg_regulator_percentage"
+      ],
+      "energy": {
+        "approximation": {
+          "usageOn": 5,
+          "usageOff": 1
+        },
+        "cumulative": true
+      },
+      "capabilitiesOptions": {
+        "button.calibrate": {
+          "maintenanceAction": false,
+          "title": {
+            "en": "Start calibration"
+          },
+          "desc": {
+            "en": "Start the sensor calibration process."
+          }
+        },
+        "button.reset_meter": {
+          "maintenanceAction": false,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), this can not be restored."
+          }
+        },
+        "measure_power": {
+          "approximated": true
+        }
+      },
+      "connectivity": [
+        "zigbee"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "settings": [
+        {
+          "id": "thermostat_regulator_mode",
+          "label": {
+            "en": "Thermostat/Regulator mode"
+          },
+          "hint": {
+            "en": "Made to take effect. We need to go back the main interface and click this APP `thermostat` icon to launch application again."
+          },
+          "type": "dropdown",
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Thermostat Mode"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Regulator Heating"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sensor_mode",
+          "type": "dropdown",
+          "value": "f",
+          "label": {
+            "en": "Sensor mode "
+          },
+          "values": [
+            {
+              "id": "a",
+              "label": {
+                "en": "A "
+              }
+            },
+            {
+              "id": "f",
+              "label": {
+                "en": "F "
+              }
+            },
+            {
+              "id": "af",
+              "label": {
+                "en": "AF "
+              }
+            },
+            {
+              "id": "a2",
+              "label": {
+                "en": "A2 "
+              }
+            },
+            {
+              "id": "a2f",
+              "label": {
+                "en": "A2F "
+              }
+            },
+            {
+              "id": "p",
+              "label": {
+                "en": "P "
+              }
+            }
+          ]
+        },
+        {
+          "id": "lcd_backlight_wait",
+          "label": {
+            "en": "LCD backlight standby"
+          },
+          "type": "number",
+          "units": {
+            "en": "%"
+          },
+          "min": 1,
+          "max": 100,
+          "value": 10
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Window"
+          },
+          "children": [
+            {
+              "id": "window_check",
+              "label": {
+                "en": "Window check"
+              },
+              "type": "checkbox",
+              "value": false
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "App version"
+          },
+          "children": [
+            {
+              "id": "app_version",
+              "type": "label",
+              "label": {
+                "en": "App version"
+              },
+              "value": "v1.0.2303.2",
+              "hint": {
+                "en": "The App version of the device."
+              }
+            }
+          ]
         }
       ]
     },
@@ -3874,7 +4112,7 @@
         ]
       },
       {
-        "id": "smart_switch_turned_on_for_switch_1",
+        "id": "action_smart_switch_turned_on_for_switch_1",
         "title": {
           "en": "Turned on for switch 1"
         },
@@ -3890,7 +4128,7 @@
         ]
       },
       {
-        "id": "smart_switch_turned_off_for_switch_1",
+        "id": "action_smart_switch_turned_off_for_switch_1",
         "title": {
           "en": "Turned off for switch 1"
         },
@@ -3906,7 +4144,7 @@
         ]
       },
       {
-        "id": "smart_switch_turned_on_for_switch_2",
+        "id": "action_smart_switch_turned_on_for_switch_2",
         "title": {
           "en": "Turned on for switch 2"
         },
@@ -3922,7 +4160,7 @@
         ]
       },
       {
-        "id": "smart_switch_turned_off_for_switch_2",
+        "id": "action_smart_switch_turned_off_for_switch_2",
         "title": {
           "en": "Turned off for switch 2"
         },
@@ -3938,7 +4176,7 @@
         ]
       },
       {
-        "id": "smart_switch_with_onoff",
+        "id": "action_smart_switch_with_onoff",
         "title": {
           "en": "Smart Switch onoff"
         },
@@ -3974,6 +4212,135 @@
             "title": {
               "en": "Device number: 1 or 2"
             }
+          }
+        ]
+      }
+    ],
+    "triggers": [
+      {
+        "id": "trigger_smart_switch_2gang_turned_on_1",
+        "title": {
+          "en": "It Switch 1 turned ON "
+        },
+        "titleFormatted": {
+          "en": "It Switch 1 turned ON "
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "trigger_smart_switch_2gang_turned_on_2",
+        "title": {
+          "en": "It Switch 2 turned ON "
+        },
+        "titleFormatted": {
+          "en": "It Switch 2 turned ON "
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "trigger_smart_switch_2gang_turned_off_1",
+        "title": {
+          "en": "It Switch 1 turned OFF "
+        },
+        "titleFormatted": {
+          "en": "It Switch 1 turned OFF "
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      },
+      {
+        "id": "trigger_smart_switch_2gang_turned_off_2",
+        "title": {
+          "en": "It Switch 2 turned OFF "
+        },
+        "titleFormatted": {
+          "en": "It Switch 2 turned OFF "
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "condition_smart_switch_2gang_turned_onoff",
+        "title": {
+          "en": "When Switch ... turned ... "
+        },
+        "titleFormatted": {
+          "en": "When [[channel]] turned [[when]]"
+        },
+        "hint": {
+          "en": "When if it channel 1/2 turned ON/OFF "
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=smart_switch_2gang_zg"
+          },
+          {
+            "name": "channel",
+            "title": {
+              "en": "Chanel"
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "Switch 1"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Switch 2"
+                }
+              }
+            ]
+          },
+          {
+            "name": "when",
+            "title": {
+              "en": "When "
+            },
+            "type": "dropdown",
+            "values": [
+              {
+                "id": "on",
+                "label": {
+                  "en": "ON"
+                }
+              },
+              {
+                "id": "off",
+                "label": {
+                  "en": "OFF"
+                }
+              }
+            ]
           }
         ]
       }

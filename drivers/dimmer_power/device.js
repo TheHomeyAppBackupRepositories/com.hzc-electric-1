@@ -1,6 +1,6 @@
 const { ZigBeeDevice } = require("homey-zigbeedriver");
 const { CLUSTER } = require("zigbee-clusters");
-const HzcSwitch2GangZigBeeDevice = require('../../lib/HzcSwitch2GangZigBeeDevice')
+//const HzcSwitch2GangZigBeeDevice = require('../../lib/HzcSwitch2GangZigBeeDevice')
 const HzcDimmerZigBeeDevice = require('../../lib/HzcDimmerZigBeeDevice')
 
 class DimmerPowerDevice extends HzcDimmerZigBeeDevice {

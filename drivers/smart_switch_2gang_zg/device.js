@@ -39,7 +39,15 @@ class SmartSwitch_2gang_ZG_Device extends HzcSwitch2GangZigBeeDevice {
     //await this.registerRmsCurrent(2);
     //await this.registerRmsVoltage(2);  
       
-    
+ 
+    this.zclNode.endpoints[1].clusters[CLUSTER.ON_OFF.NAME].on('attr.onOff', async value => {
+      this.log(`-- rev swith 1 onoff = `, value)
+      this.driver.triggerMyFlow(this, 1, value ? 'on' : 'off');
+    })
+    this.zclNode.endpoints[2].clusters[CLUSTER.ON_OFF.NAME].on('attr.onOff', async value => {
+      this.log(`-- rev swith 2 onoff = `, value)
+      this.driver.triggerMyFlow(this, 2, value ? 'on' : 'off');
+    })
   }  
 
   
@@ -54,9 +62,9 @@ class SmartSwitch_2gang_ZG_Device extends HzcSwitch2GangZigBeeDevice {
     if (args.onoff === 1) {
       this.zclNode.endpoints[args.endpoint].clusters[CLUSTER.ON_OFF.NAME].setOn()
       .then(async result => { 
-        if (onoff === 0) {
+        if (args.onoff === 0) {
           await this.setCapabilityValue('onoff', false);  
-        } else if (onoff === 1) {
+        } else if (args.onoff === 1) {
           await this.setCapabilityValue('onoff', true);  
         }
         return result
@@ -65,9 +73,9 @@ class SmartSwitch_2gang_ZG_Device extends HzcSwitch2GangZigBeeDevice {
     else if (args.onoff === 0) {
       this.zclNode.endpoints[args.endpoint].clusters[CLUSTER.ON_OFF.NAME].setOff()
       .then(async result => { 
-        if (onoff === 0) {
+        if (args.onoff === 0) {
           await this.setCapabilityValue('onoff', false);  
-        } else if (onoff === 1) {
+        } else if (args.onoff === 1) {
           await this.setCapabilityValue('onoff', true);  
         }
         return result
